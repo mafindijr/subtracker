@@ -10,6 +10,7 @@ interface SubscriptionFormProps {
 }
 
 export function SubscriptionForm({ subscription, onSubmit, onCancel }: SubscriptionFormProps) {
+  
   const [formData, setFormData] = useState<SubscriptionFormData>({
     name: '',
     cost: '',
