@@ -85,7 +85,7 @@ export function SubscriptionForm({ subscription, onSubmit, onCancel }: Subscript
               Cost
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500">$</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500">₦</span>
               <input
                 type="number"
                 step="0.01"
@@ -93,7 +93,7 @@ export function SubscriptionForm({ subscription, onSubmit, onCancel }: Subscript
                 value={formData.cost}
                 onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
                 className="w-full rounded-lg border border-zinc-300 bg-white py-2 pl-8 pr-3 text-zinc-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
-                placeholder="9.99"
+                placeholder="5000"
               />
             </div>
             {errors.cost && <p className="mt-1 text-sm text-red-500">{errors.cost}</p>}
