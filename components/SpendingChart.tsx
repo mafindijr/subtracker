@@ -9,6 +9,7 @@ const COLORS = [
 ];
 
 export function SpendingChart() {
+  
   const { subscriptions } = useSubscriptions();
 
   const activeSubscriptions = subscriptions.filter(sub => sub.status === 'active');
