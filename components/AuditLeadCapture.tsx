@@ -10,6 +10,7 @@ export function AuditLeadCapture() {
         </div>
 
         <form action="#" method="post" className="flex w-full max-w-md gap-2">
+          
           <label htmlFor="lead-capture-email" className="sr-only">
             Email address
           </label>
