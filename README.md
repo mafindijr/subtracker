@@ -3,6 +3,10 @@
 SubTracker is a modern subscription management dashboard built with Next.js, React, TypeScript, and Tailwind CSS.
 It helps users track recurring subscriptions, monitor monthly spending, and stay ahead of renewal dates.
 
+## Project Preview
+
+![SubTracker Dashboard Interface](public/screenshorts/Screenshot.png)
+
 ## Features
 
 - Add, edit, and delete subscriptions
