@@ -13,6 +13,9 @@ import {
   EmailForm,
   SearchBar,
   FilterTabs,
+  SortSelect,
+  PricingSection,
+  CurrencyInsight,
   SpendingChart,
 } from '@/components';
 
@@ -32,6 +35,7 @@ export default function Dashboard() {
 
   const [showForm, setShowForm] = useState(false);
   const [editingSubscription, setEditingSubscription] = useState<Subscription | null>(null);
+  const [sortOption, setSortOption] = useState<'renewal' | 'cost' | 'name'>('renewal');
 
   const handleAdd = (data: Parameters<typeof addSubscription>[0]) => {
     addSubscription(data);
@@ -59,6 +63,16 @@ export default function Dashboard() {
     setShowForm(false);
     setEditingSubscription(null);
   };
+
+  const sortedSubscriptions = [...filteredSubscriptions].sort((a, b) => {
+    if (sortOption === 'name') {
+      return a.name.localeCompare(b.name);
+    }
+    if (sortOption === 'cost') {
+      return a.cost - b.cost;
+    }
+    return new Date(a.renewalDate).getTime() - new Date(b.renewalDate).getTime();
+  });
 
   if (isLoading) {
     return (
@@ -139,14 +153,15 @@ export default function Dashboard() {
                   </button>
                 </div>
 
-                <div className="mb-6 flex flex-col gap-4 sm:flex-row">
-                  <div className="flex-1">
+                <div className="mb-6 grid gap-4 lg:grid-cols-[1.4fr_auto]">
+                  <div className="grid gap-4 sm:grid-cols-[1fr_auto]">
                     <SearchBar value={searchQuery} onChange={setSearchQuery} />
+                    <FilterTabs activeFilter={filterType} onFilterChange={setFilterType} />
                   </div>
-                  <FilterTabs activeFilter={filterType} onFilterChange={setFilterType} />
+                  <SortSelect value={sortOption} onChange={setSortOption} />
                 </div>
 
-                {filteredSubscriptions.length === 0 ? (
+                {sortedSubscriptions.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-16 text-center">
                     <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800">
                       <svg className="h-8 w-8 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -164,7 +179,7 @@ export default function Dashboard() {
                   </div>
                 ) : (
                   <div className="grid gap-4 sm:grid-cols-2">
-                    {filteredSubscriptions.map((subscription) => (
+                    {sortedSubscriptions.map((subscription) => (
                       <SubscriptionCard
                         key={subscription.id}
                         subscription={subscription}
@@ -180,7 +195,12 @@ export default function Dashboard() {
             <div className="space-y-6">
               <SpendingChart />
               <EmailForm />
+              <CurrencyInsight />
             </div>
+          </div>
+
+          <div className="mb-10">
+            <PricingSection />
           </div>
         </div>
       </main>
