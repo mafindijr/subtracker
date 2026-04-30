@@ -6,4 +6,6 @@ export { SubscriptionForm } from './SubscriptionForm';
 export { EmailForm } from './EmailForm';
 export { SearchBar } from './SearchBar';
 export { FilterTabs } from './FilterTabs';
+export { SortSelect } from './SortSelect';
+export { PricingSection } from './PricingSection';
 export { SpendingChart } from './SpendingChart';
