@@ -1,7 +1,18 @@
 import type { NextConfig } from "next";
+import bundleAnalyzer from '@next/bundle-analyzer';
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  compress: true,
+  images: {
+    formats: ['image/webp', 'image/avif'],
+  },
+  experimental: {
+    optimizePackageImports: ['@heroicons/react', 'lucide-react'],
+  },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);

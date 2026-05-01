@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useSubscriptions } from '@/context/SubscriptionContext';
 import { Subscription } from '@/types';
 import { formatCurrency } from '@/lib/storage';
@@ -14,10 +15,11 @@ import {
   SearchBar,
   FilterTabs,
   SortSelect,
-  PricingSection,
   CurrencyInsight,
-  SpendingChart,
 } from '@/components';
+
+const PricingSection = dynamic(() => import('@/components').then(mod => ({ default: mod.PricingSection })));
+const SpendingChart = dynamic(() => import('@/components').then(mod => ({ default: mod.SpendingChart })));
 
 export default function Dashboard() {
   const {
