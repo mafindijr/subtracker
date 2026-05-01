@@ -15,10 +15,10 @@ import {
   SearchBar,
   FilterTabs,
   SortSelect,
+  PricingSection,
   CurrencyInsight,
 } from '@/components';
 
-const PricingSection = dynamic(() => import('@/components').then(mod => ({ default: mod.PricingSection })));
 const SpendingChart = dynamic(() => import('@/components').then(mod => ({ default: mod.SpendingChart })));
 
 export default function Dashboard() {
