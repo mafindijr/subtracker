@@ -13,6 +13,7 @@ import {
   EmailForm,
   SearchBar,
   FilterTabs,
+  PricingSection,
   SpendingChart,
 } from '@/components';
 
@@ -181,6 +182,10 @@ export default function Dashboard() {
               <SpendingChart />
               <EmailForm />
             </div>
+          </div>
+
+          <div className="mb-10">
+            <PricingSection />
           </div>
         </div>
       </main>

@@ -15,6 +15,7 @@ It helps users track recurring subscriptions, monitor monthly spending, and stay
 - Search subscriptions by name
 - Dashboard summary cards for monthly spending, active count, and upcoming renewals (next 7 days)
 - Spending breakdown visualization by subscription
+- Pricing section with multiple plan options and product-inspired pricing cards
 - Light and dark theme toggle with saved preference
 - Local persistence using browser `localStorage` (no backend required)
 
