@@ -16,6 +16,9 @@ It helps users track recurring subscriptions, monitor monthly spending, and stay
 - Dashboard summary cards for monthly spending, active count, and upcoming renewals (next 7 days)
 - Spending breakdown visualization by subscription
 - Pricing section with multiple plan options and product-inspired pricing cards
+- Sort subscriptions by renewal date, cost, or name for smarter listing
+- Live public API integration showing USD to NGN exchange rate and real-time market insight
+- Enhanced email reminder flow with validation, saved email state, and update/clear actions
 - Light and dark theme toggle with saved preference
 - Local persistence using browser `localStorage` (no backend required)
 
