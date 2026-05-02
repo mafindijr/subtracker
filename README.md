@@ -22,6 +22,16 @@ It helps users track recurring subscriptions, monitor monthly spending, and stay
 - Light and dark theme toggle with saved preference
 - Local persistence using browser `localStorage` (no backend required)
 
+## Stage 4 Improvements
+
+Compared to the previous stage, this version adds:
+
+- A professional pricing/services section using `id="pricing"` with Starter, Growth, and Premium plans.
+- Improved email reminder UX in `components/EmailForm.tsx` with validation, persistent email storage, and update/clear actions.
+- Dashboard feature enhancements including sorting, filtering, summary cards, and renewal insights.
+- Better UI/UX and responsiveness with polished cards, controls, and layout across screen sizes.
+- Product-focused refinements that keep the app clean, reusable, and ready for future enhancements.
+
 ## Tech Stack
 
 - Next.js `16.2.4` (App Router)
