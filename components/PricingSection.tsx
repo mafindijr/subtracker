@@ -29,6 +29,7 @@ const plans = [
 
 export function PricingSection() {
   return (
+    
     <section id="pricing" className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
