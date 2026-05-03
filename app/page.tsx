@@ -16,6 +16,7 @@ import {
   FilterTabs,
   SortSelect,
   PricingSection,
+  ServicesSection,
   CurrencyInsight,
 } from '@/components';
 
@@ -201,7 +202,8 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="mb-10">
+          <div className="mb-8 space-y-8">
+            <ServicesSection />
             <PricingSection />
           </div>
         </div>

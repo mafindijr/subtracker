@@ -8,5 +8,6 @@ export { SearchBar } from './SearchBar';
 export { FilterTabs } from './FilterTabs';
 export { SortSelect } from './SortSelect';
 export { PricingSection } from './PricingSection';
+export { ServicesSection } from './ServicesSection';
 export { CurrencyInsight } from './CurrencyInsight';
 export { SpendingChart } from './SpendingChart';
