@@ -201,11 +201,12 @@ export default function Dashboard() {
               <CurrencyInsight />
             </div>
           </div>
-
+        <section id="pricing">
           <div className="mb-8 space-y-8">
             <ServicesSection />
             <PricingSection />
           </div>
+        </section>
         </div>
       </main>
 
