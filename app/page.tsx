@@ -204,7 +204,9 @@ export default function Dashboard() {
         
           <div className="mb-8 space-y-8">
             <ServicesSection />
-            <PricingSection />
+            <div id="pricing">
+              <PricingSection />
+            </div>
           </div>
         
         </div>
