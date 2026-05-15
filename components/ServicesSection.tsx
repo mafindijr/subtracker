@@ -58,7 +58,7 @@ export function ServicesSection() {
         {services.map((service) => (
           <div
             key={service.name}
-            className="rounded-2xl border border-zinc-200 bg-gradient-to-br from-zinc-50 to-white p-6 transition-all hover:border-indigo-300 hover:shadow-md dark:border-zinc-800 dark:from-zinc-900 dark:to-zinc-800 dark:hover:border-indigo-500"
+            className="rounded-2xl border border-zinc-200 bg-linear-to-br from-zinc-50 to-white p-6 transition-all hover:border-indigo-300 hover:shadow-md dark:border-zinc-800 dark:from-zinc-900 dark:to-zinc-800 dark:hover:border-indigo-500"
           >
             <div className="flex items-start justify-between gap-4">
               <div className="text-4xl">{service.icon}</div>
