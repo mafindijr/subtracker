@@ -21,7 +21,6 @@ export function SubscriptionForm({ subscription, onSubmit, onCancel }: Subscript
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    
     if (subscription) {
       setFormData({
         name: subscription.name,
