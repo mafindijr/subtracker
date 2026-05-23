@@ -10,13 +10,14 @@ interface SubscriptionFormProps {
 }
 
 export function SubscriptionForm({ subscription, onSubmit, onCancel }: SubscriptionFormProps) {
-  
+
   const [formData, setFormData] = useState<SubscriptionFormData>({
     name: '',
     cost: '',
     billingCycle: 'monthly',
     renewalDate: new Date().toISOString().split('T')[0],
     status: 'active',
+    category: 'Other',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -28,22 +29,23 @@ export function SubscriptionForm({ subscription, onSubmit, onCancel }: Subscript
         billingCycle: subscription.billingCycle,
         renewalDate: subscription.renewalDate,
         status: subscription.status,
+        category: subscription.category,
       });
     }
   }, [subscription]);
 
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
-    
+
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
     }
-    
+
     const cost = parseFloat(formData.cost);
     if (isNaN(cost) || cost <= 0) {
       newErrors.cost = 'Valid cost is required';
     }
-    
+
     if (!formData.renewalDate) {
       newErrors.renewalDate = 'Renewal date is required';
     }
@@ -65,7 +67,7 @@ export function SubscriptionForm({ subscription, onSubmit, onCancel }: Subscript
         <h2 className="mb-6 text-xl font-bold text-zinc-900 dark:text-zinc-50">
           {subscription ? 'Edit Subscription' : 'Add Subscription'}
         </h2>
-        
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
@@ -138,6 +140,25 @@ export function SubscriptionForm({ subscription, onSubmit, onCancel }: Subscript
             >
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+              Category
+            </label>
+            <select
+              value={formData.category}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
+              className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
+            >
+              <option value="Entertainment">Entertainment</option>
+              <option value="Software">Software</option>
+              <option value="Utilities">Utilities</option>
+              <option value="Health">Health</option>
+              <option value="Finance">Finance</option>
+              <option value="Education">Education</option>
+              <option value="Other">Other</option>
             </select>
           </div>
 
