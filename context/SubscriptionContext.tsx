@@ -2,15 +2,16 @@
 
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { Subscription, SubscriptionFormData, FilterType, SummaryData } from '@/types';
-import { 
-  getSubscriptions, 
-  saveSubscriptions, 
+import {
+  getSubscriptions,
+  saveSubscriptions,
   generateId,
   calculateMonthlyEquivalent,
   isUpcomingRenewal
 } from '@/lib/storage';
 
 interface SubscriptionContextType {
+
   subscriptions: Subscription[];
   filteredSubscriptions: Subscription[];
   searchQuery: string;
@@ -22,6 +23,7 @@ interface SubscriptionContextType {
   deleteSubscription: (id: string) => void;
   setSearchQuery: (query: string) => void;
   setFilterType: (filter: FilterType) => void;
+
 }
 
 const SubscriptionContext = createContext<SubscriptionContextType | undefined>(undefined);
@@ -50,7 +52,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
       if (filterType === 'inactive') return sub.status === 'inactive';
       return true;
     })
-    .filter(sub => 
+    .filter(sub =>
       sub.name.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .sort((a, b) => new Date(a.renewalDate).getTime() - new Date(b.renewalDate).getTime());
@@ -63,7 +65,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
       return total;
     }, 0),
     activeCount: subscriptions.filter(sub => sub.status === 'active').length,
-    upcomingRenewals: subscriptions.filter(sub => 
+    upcomingRenewals: subscriptions.filter(sub =>
       sub.status === 'active' && isUpcomingRenewal(sub.renewalDate, 7)
     ).length,
   };
@@ -82,16 +84,16 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const updateSubscription = useCallback((id: string, data: SubscriptionFormData) => {
-    setSubscriptions(prev => prev.map(sub => 
-      sub.id === id 
+    setSubscriptions(prev => prev.map(sub =>
+      sub.id === id
         ? {
-            ...sub,
-            name: data.name,
-            cost: parseFloat(data.cost),
-            billingCycle: data.billingCycle,
-            renewalDate: data.renewalDate,
-            status: data.status,
-          }
+          ...sub,
+          name: data.name,
+          cost: parseFloat(data.cost),
+          billingCycle: data.billingCycle,
+          renewalDate: data.renewalDate,
+          status: data.status,
+        }
         : sub
     ));
   }, []);
