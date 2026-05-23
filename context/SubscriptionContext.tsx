@@ -11,11 +11,12 @@ import {
 } from '@/lib/storage';
 
 interface SubscriptionContextType {
-
   subscriptions: Subscription[];
   filteredSubscriptions: Subscription[];
   searchQuery: string;
   filterType: FilterType;
+  filterCategory: string;
+  filterBillingCycle: string;
   isLoading: boolean;
   summary: SummaryData;
   addSubscription: (data: SubscriptionFormData) => void;
@@ -23,7 +24,8 @@ interface SubscriptionContextType {
   deleteSubscription: (id: string) => void;
   setSearchQuery: (query: string) => void;
   setFilterType: (filter: FilterType) => void;
-
+  setFilterCategory: (category: string) => void;
+  setFilterBillingCycle: (cycle: string) => void;
 }
 
 const SubscriptionContext = createContext<SubscriptionContextType | undefined>(undefined);
@@ -32,6 +34,8 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<FilterType>('all');
+  const [filterCategory, setFilterCategory] = useState('all');
+  const [filterBillingCycle, setFilterBillingCycle] = useState('all');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -48,13 +52,21 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
 
   const filteredSubscriptions = subscriptions
     .filter(sub => {
-      if (filterType === 'active') return sub.status === 'active';
-      if (filterType === 'inactive') return sub.status === 'inactive';
+      // Status filter
+      if (filterType === 'active' && sub.status !== 'active') return false;
+      if (filterType === 'inactive' && sub.status !== 'inactive') return false;
+
+      // Category filter
+      if (filterCategory !== 'all' && sub.category !== filterCategory) return false;
+
+      // Billing cycle filter
+      if (filterBillingCycle !== 'all' && sub.billingCycle !== filterBillingCycle) return false;
+
+      // Search query
+      if (searchQuery && !sub.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+
       return true;
     })
-    .filter(sub =>
-      sub.name.toLowerCase().includes(searchQuery.toLowerCase())
-    )
     .sort((a, b) => new Date(a.renewalDate).getTime() - new Date(b.renewalDate).getTime());
 
   const summary: SummaryData = {
@@ -68,6 +80,13 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
     upcomingRenewals: subscriptions.filter(sub =>
       sub.status === 'active' && isUpcomingRenewal(sub.renewalDate, 7)
     ).length,
+    annualProjection: subscriptions.reduce((total, sub) => {
+      if (sub.status === 'active') {
+        const monthly = calculateMonthlyEquivalent(sub.cost, sub.billingCycle);
+        return total + (monthly * 12);
+      }
+      return total;
+    }, 0),
   };
 
   const addSubscription = useCallback((data: SubscriptionFormData) => {
@@ -76,6 +95,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
       name: data.name,
       cost: parseFloat(data.cost),
       billingCycle: data.billingCycle,
+      category: data.category,
       renewalDate: data.renewalDate,
       status: data.status,
       createdAt: new Date().toISOString(),
@@ -91,6 +111,7 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
           name: data.name,
           cost: parseFloat(data.cost),
           billingCycle: data.billingCycle,
+          category: data.category,
           renewalDate: data.renewalDate,
           status: data.status,
         }
@@ -108,6 +129,8 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
       filteredSubscriptions,
       searchQuery,
       filterType,
+      filterCategory,
+      filterBillingCycle,
       isLoading,
       summary,
       addSubscription,
@@ -115,6 +138,8 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
       deleteSubscription,
       setSearchQuery,
       setFilterType,
+      setFilterCategory,
+      setFilterBillingCycle,
     }}>
       {children}
     </SubscriptionContext.Provider>
