@@ -38,6 +38,7 @@ export default function Dashboard() {
 
   const [showForm, setShowForm] = useState(false);
   const [editingSubscription, setEditingSubscription] = useState<Subscription | null>(null);
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const [sortOption, setSortOption] = useState<'renewal' | 'cost' | 'name'>('renewal');
 
   const handleAdd = (data: Parameters<typeof addSubscription>[0]) => {
@@ -57,8 +58,13 @@ export default function Dashboard() {
   };
 
   const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this subscription?')) {
-      deleteSubscription(id);
+    setPendingDeleteId(id);
+  };
+
+  const confirmDelete = () => {
+    if (pendingDeleteId) {
+      deleteSubscription(pendingDeleteId);
+      setPendingDeleteId(null);
     }
   };
 
@@ -225,6 +231,33 @@ export default function Dashboard() {
           onSubmit={handleEdit}
           onCancel={handleCancelForm}
         />
+      )}
+
+      {pendingDeleteId && (
+        <div id="modal" className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl dark:bg-zinc-900">
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">Delete Subscription</h2>
+            <p className="mt-3 text-zinc-600 dark:text-zinc-400">
+              Are you sure you want to delete this subscription? This action cannot be undone.
+            </p>
+            <div className="mt-6 flex gap-3">
+              <button
+                type="button"
+                onClick={() => setPendingDeleteId(null)}
+                className="flex-1 rounded-lg border border-zinc-300 bg-white px-4 py-2 font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmDelete}
+                className="flex-1 rounded-lg bg-red-600 px-4 py-2 font-medium text-white transition-colors hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
