@@ -1,4 +1,7 @@
+
 export function AuditLeadCapture() {
+
+
   return (
     <section className="border-t border-zinc-200 bg-zinc-100/70 px-4 py-6 dark:border-zinc-800 dark:bg-zinc-900/60">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -10,7 +13,7 @@ export function AuditLeadCapture() {
         </div>
 
         <form action="#" method="post" className="flex w-full max-w-md gap-2">
-          
+
           <label htmlFor="lead-capture-email" className="sr-only">
             Email address
           </label>
