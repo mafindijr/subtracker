@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Subscription, SubscriptionFormData } from '@/types';
+import { useState } from 'react';
+import { Subscription, SubscriptionCategory, SubscriptionFormData } from '@/types';
+import { Modal } from './Modal';
 
 interface SubscriptionFormProps {
   subscription?: Subscription | null;
@@ -10,29 +11,26 @@ interface SubscriptionFormProps {
 }
 
 export function SubscriptionForm({ subscription, onSubmit, onCancel }: SubscriptionFormProps) {
-
-  const [formData, setFormData] = useState<SubscriptionFormData>({
-    name: '',
-    cost: '',
-    billingCycle: 'monthly',
-    renewalDate: new Date().toISOString().split('T')[0],
-    status: 'active',
-    category: 'Other',
-  });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    if (subscription) {
-      setFormData({
+  const [formData, setFormData] = useState<SubscriptionFormData>(() => (
+    subscription
+      ? {
         name: subscription.name,
         cost: subscription.cost.toString(),
         billingCycle: subscription.billingCycle,
         renewalDate: subscription.renewalDate,
         status: subscription.status,
         category: subscription.category,
-      });
-    }
-  }, [subscription]);
+      }
+      : {
+        name: '',
+        cost: '',
+        billingCycle: 'monthly',
+        renewalDate: new Date().toISOString().split('T')[0],
+        status: 'active',
+        category: 'Other',
+      }
+  ));
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -62,13 +60,8 @@ export function SubscriptionForm({ subscription, onSubmit, onCancel }: Subscript
   };
 
   return (
-    <div id='modal' className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl dark:bg-zinc-900">
-        <h2 className="mb-6 text-xl font-bold text-zinc-900 dark:text-zinc-50">
-          {subscription ? 'Edit Subscription' : 'Add Subscription'}
-        </h2>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <Modal title={subscription ? 'Edit Subscription' : 'Add Subscription'}>
+      <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
               Name
@@ -149,7 +142,7 @@ export function SubscriptionForm({ subscription, onSubmit, onCancel }: Subscript
             </label>
             <select
               value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value as SubscriptionCategory })}
               className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-zinc-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-50"
             >
               <option value="Entertainment">Entertainment</option>
@@ -177,8 +170,7 @@ export function SubscriptionForm({ subscription, onSubmit, onCancel }: Subscript
               {subscription ? 'Save Changes' : 'Add Subscription'}
             </button>
           </div>
-        </form>
-      </div>
-    </div>
+      </form>
+    </Modal>
   );
 }
