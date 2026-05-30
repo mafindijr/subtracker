@@ -3,6 +3,7 @@ export { ThemeToggle } from './ThemeToggle';
 export { SummaryCard } from './SummaryCard';
 export { SubscriptionCard } from './SubscriptionCard';
 export { SubscriptionForm } from './SubscriptionForm';
+export { Modal } from './Modal';
 export { EmailForm } from './EmailForm';
 export { SearchBar } from './SearchBar';
 export { FilterTabs } from './FilterTabs';
