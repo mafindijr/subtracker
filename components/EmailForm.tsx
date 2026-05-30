@@ -11,11 +11,13 @@ export function EmailForm() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const storedEmail = localStorage.getItem(EMAIL_STORAGE_KEY);
-    if (storedEmail) {
-      setEmail(storedEmail);
-      setIsSubmitted(true);
-    }
+    queueMicrotask(() => {
+      const storedEmail = localStorage.getItem(EMAIL_STORAGE_KEY);
+      if (storedEmail) {
+        setEmail(storedEmail);
+        setIsSubmitted(true);
+      }
+    });
   }, []);
 
   const validateEmail = (email: string): boolean => {

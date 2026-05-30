@@ -11,6 +11,7 @@ import {
   SummaryCard,
   SubscriptionCard,
   SubscriptionForm,
+  Modal,
   EmailForm,
   SearchBar,
   FilterTabs,
@@ -234,13 +235,10 @@ export default function Dashboard() {
       )}
 
       {pendingDeleteId && (
-        <div id="modal" className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl dark:bg-zinc-900">
-            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">Delete Subscription</h2>
-            <p className="mt-3 text-zinc-600 dark:text-zinc-400">
-              Are you sure you want to delete this subscription? This action cannot be undone.
-            </p>
-            <div className="mt-6 flex gap-3">
+        <Modal
+          title="Delete Subscription"
+          footer={
+            <>
               <button
                 type="button"
                 onClick={() => setPendingDeleteId(null)}
@@ -255,9 +253,13 @@ export default function Dashboard() {
               >
                 Delete
               </button>
-            </div>
-          </div>
-        </div>
+            </>
+          }
+        >
+          <p className="text-zinc-600 dark:text-zinc-400">
+            Are you sure you want to delete this subscription? This action cannot be undone.
+          </p>
+        </Modal>
       )}
     </>
   );

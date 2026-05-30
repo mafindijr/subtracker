@@ -1,6 +1,7 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import type { ReactNode } from 'react';
 import { Subscription, SubscriptionFormData, FilterType, SummaryData } from '@/types';
 import {
   getSubscriptions,
@@ -39,9 +40,11 @@ export function SubscriptionProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const loaded = getSubscriptions();
-    setSubscriptions(loaded);
-    setIsLoading(false);
+    queueMicrotask(() => {
+      const loaded = getSubscriptions();
+      setSubscriptions(loaded);
+      setIsLoading(false);
+    });
   }, []);
 
   useEffect(() => {
